@@ -1,0 +1,12 @@
+{
+  "description": "听力词汇练习微信小程序开发工程",
+  "packOptions": { "ignore": [] },
+  "setting": { "es6": true, "enhance": true, "postcss": true, "minified": true, "urlCheck": false },
+  "compileType": "miniprogram",
+  "miniprogramRoot": "./",
+  "libVersion": "3.6.5",
+  "appid": "touristappid",
+  "projectname": "listening-vocabulary-miniapp",
+  "simulatorType": "wechat",
+  "condition": {}
+}

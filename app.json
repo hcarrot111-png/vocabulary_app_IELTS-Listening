@@ -1,0 +1,27 @@
+{
+  "pages": [
+    "pages/book/index",
+    "pages/review/index",
+    "pages/stats/index",
+    "pages/groups/index",
+    "pages/practice/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "听力词汇练习",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f3f7fb"
+  },
+  "tabBar": {
+    "color": "#7b8798",
+    "selectedColor": "#006eeb",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/book/index", "text": "词书" },
+      { "pagePath": "pages/review/index", "text": "复习" },
+      { "pagePath": "pages/stats/index", "text": "统计" }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,1 @@
+.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:18rpx;margin-top:26rpx}.group{border:2rpx solid #dce5ef;background:#fff;border-radius:18rpx;padding:22rpx 4rpx;font-size:24rpx;font-weight:700}.group.active{border-color:#78b5ff;background:#eef6ff;color:#006eeb}
