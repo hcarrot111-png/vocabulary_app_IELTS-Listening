@@ -1,0 +1,9 @@
+<view class="page">
+  <view class="title">听力词汇练习</view><view class="sub">选择词汇类型，继续上次进度或选择其他词组</view>
+  <view class="book-card" wx:for="{{books}}" wx:key="type">
+    <view class="mark">{{item.mark}}</view><view class="book-title">{{item.name}}</view><view class="sub">{{item.desc}}</view>
+    <view class="last">上次学习</view><view class="group-name">第{{item.lastGroup}}组</view>
+    <view class="bottom-actions"><button class="btn primary" data-type="{{item.type}}" data-group="{{item.lastGroup}}" bindtap="continueBook">继续学习</button><button class="btn" data-type="{{item.type}}" bindtap="chooseGroup">选择其他组</button></view>
+  </view>
+</view>
+<view class="mask" wx:if="{{modalVisible}}" bindtap="closeModal"><view class="dialog" catchtap="noop"><view class="row between"><view><view class="dialog-title">第{{selectedGroup}}组 · {{selectedBook.name}}</view><view class="sub">请选择本组词汇复习模式</view></view><view class="close" bindtap="closeModal">×</view></view><view class="mode-card" wx:for="{{modes}}" wx:key="value"><view class="mode-card-title">{{item.name}}</view><view class="sub">{{item.desc}}</view><button class="btn primary" data-mode="{{item.value}}" bindtap="enterPractice">进入练习</button></view></view></view>

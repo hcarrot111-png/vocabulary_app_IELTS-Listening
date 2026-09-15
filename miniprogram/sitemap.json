@@ -1,0 +1,1 @@
+{ "desc": "默认允许微信索引", "rules": [{ "action": "allow", "page": "*" }] }
