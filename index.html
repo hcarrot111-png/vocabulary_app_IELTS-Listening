@@ -148,6 +148,66 @@ h1{margin:0;font-size:30px}.sub{color:var(--muted);margin-top:8px;font-size:14px
  .content{position:absolute;inset:78px 0 72px;margin:0;min-width:0;padding:16px 14px 36px;overflow-y:auto}.grid3{grid-template-columns:1fr}.type-card{min-height:0}.group-grid{grid-template-columns:repeat(3,1fr)}.mode-modal-grid{grid-template-columns:1fr}.mode-dialog{width:370px}.summary-grid{grid-template-columns:1fr 1fr}.chart-grid{grid-template-columns:1fr}.review-toolbar{flex-direction:column;align-items:stretch}.review-stage.detail-open .review-detail{position:absolute;z-index:80;left:10px;right:10px;top:80px;bottom:10px;width:auto;max-height:none}.review-table-wrap{overflow-x:auto}.review-table{min-width:650px}
  .exercise-page{padding:0}.header h1{font-size:22px}.card{padding:18px 14px 180px;min-height:690px}.word{font-size:35px}.options{gap:4px}.circle{width:58px;height:58px;font-size:25px}.bottom{left:10px;right:10px;grid-template-columns:repeat(3,minmax(0,1fr))!important}.settings{width:360px}.done-card{padding:50px 18px}.done-stat{width:145px}
 }
+
+/* 2026-09-17 小程序首屏紧凑版：核心信息在 430×900 视口内完整展示 */
+@media(max-width:700px), (min-width:701px){
+ .content{padding:12px 14px;overflow:hidden}
+ .content.exercise-scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+ .content.exercise-scroll .exercise-page{padding-bottom:18px}
+ .content.exercise-scroll .analysis{scroll-margin-top:12px}
+ .topbar,.page-head{margin-bottom:10px;align-items:center}
+ .topbar h1,.page-head h1{font-size:22px}
+ .topbar .sub,.page-head .sub{margin-top:3px;font-size:11px;line-height:1.35}
+
+ /* 词书：首页卡片改为横向信息卡，避免三张大卡纵向占满页面 */
+ #listView .grid3{display:grid;grid-template-columns:1fr;gap:10px}
+ #listView .type-card{min-height:0;height:162px;padding:16px 14px 14px 72px;position:relative;border-radius:18px;box-shadow:0 8px 22px rgba(30,50,80,.05)}
+ #listView .badge{position:absolute;left:14px;top:16px;width:44px;height:44px;margin:0;border-radius:13px}
+ #listView .type-card h3{font-size:18px;margin:0 0 3px}
+ #listView .desc{font-size:11px;line-height:1.4;min-height:31px;padding-right:2px}
+ #listView .progress-text{margin-top:6px;font-size:10px}
+ #listView .strong{position:absolute;left:14px;top:65px;width:44px;text-align:center;font-size:12px;color:#334155;margin:0}
+ #listView .actions{margin-top:8px;gap:8px}
+ #listView .actions .btn{flex:1;padding:9px 5px;font-size:11px}
+
+ /* 复习：只保留有效决策项；移除“最近练习时间”信息 */
+ #reviewView .page-head .sub{max-width:300px}
+ #reviewView .review-toolbar{flex-direction:row;align-items:center;gap:8px;margin-bottom:10px}
+ #reviewView .filter-row{display:flex;flex:0 0 96px}
+ #reviewView .toolbar-actions{display:grid;grid-template-columns:1fr 1.15fr 1.2fr;flex:1;gap:6px}
+ #reviewView .dropdown-btn{min-width:0;width:96px;padding:8px 9px;font-size:11px;gap:6px}
+ #reviewView .toolbar-actions .btn{width:100%;padding:8px 4px;font-size:10px;white-space:nowrap}
+ #reviewView .review-stage{min-height:0;height:574px;display:block}
+ #reviewView .review-table-wrap{height:100%;overflow:hidden;border-radius:16px}
+ #reviewView .review-table{min-width:0;width:100%;table-layout:fixed}
+ #reviewView .review-table th{padding:10px 9px;font-size:10px}
+ #reviewView .review-table td{padding:11px 9px;font-size:11px;line-height:1.35}
+ #reviewView .review-table th:nth-child(1){width:24%}
+ #reviewView .review-table th:nth-child(2){width:34%}
+ #reviewView .review-table th:nth-child(3){width:18%}
+ #reviewView .review-table th:nth-child(4){width:24%}
+ #reviewView .review-table .word-cell{font-size:13px;word-break:break-word}
+ #reviewView .book-pill{padding:4px 5px;font-size:9px;white-space:nowrap}
+ #reviewView .detail-btn{padding:6px 5px;font-size:9px;white-space:nowrap;width:100%}
+ #reviewView .settings-pop{top:142px}
+
+ /* 统计：四项数据压缩为一行，两张图表上下紧凑排列 */
+ #statsView .page-head .btn{padding:7px 9px;font-size:10px}
+ #statsView .summary-grid{grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+ #statsView .summary-card{padding:10px 7px;border-radius:12px;box-shadow:none}
+ #statsView .summary-label{font-size:9px;white-space:nowrap}
+ #statsView .summary-value{font-size:19px;margin-top:4px}
+ #statsView .summary-note{font-size:8px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #statsView .chart-grid{display:grid;grid-template-columns:1fr;gap:8px}
+ #statsView .chart-card{padding:11px 13px;border-radius:14px;box-shadow:none}
+ #statsView .chart-title{font-size:14px}
+ #statsView .chart-sub{font-size:9px;margin-top:2px}
+ #statsView .trend-chart{height:235px;margin-top:2px}
+ #statsView .mastery-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+ #statsView .mastery-head{font-size:10px;margin-bottom:5px}
+ #statsView .mastery-head strong{font-size:11px}
+ #statsView .bar-track{height:7px}
+}
 </style>
 </head>
 <body>
@@ -183,7 +243,7 @@ h1{margin:0;font-size:30px}.sub{color:var(--muted);margin-top:8px;font-size:14px
     <section id="doneView" class="hidden"></section>
 
     <section id="reviewView" class="hidden">
-      <div class="page-head"><div><h1>复习</h1><div class="sub">答错的词会自动加入这里，可按词书和最近练习时间筛选</div></div></div>
+      <div class="page-head"><div><h1>复习</h1><div class="sub">答错的词会自动加入这里，选择词书后即可开始复习</div></div></div>
       <div class="review-toolbar">
         <div class="filter-row">
           <div class="dropdown" id="bookFilter"><button class="dropdown-btn" onclick="toggleDropdown('bookFilter')"><span id="bookFilterLabel">全部</span><span>⌄</span></button><div class="dropdown-menu">
@@ -191,12 +251,6 @@ h1{margin:0;font-size:30px}.sub{color:var(--muted);margin-top:8px;font-size:14px
             <label class="check-option"><input type="checkbox" value="考点词" onchange="changeBookFilter(this)"> 考点词</label>
             <label class="check-option"><input type="checkbox" value="话题词" onchange="changeBookFilter(this)"> 话题词</label>
             <label class="check-option"><input type="checkbox" value="答案词" onchange="changeBookFilter(this)"> 答案词</label>
-          </div></div>
-          <div class="dropdown" id="timeFilter"><button class="dropdown-btn" onclick="toggleDropdown('timeFilter')"><span id="timeFilterLabel">最近练习</span><span>⌄</span></button><div class="dropdown-menu">
-            <label class="check-option"><input type="checkbox" value="day" onchange="changeTimeFilter()"> 近一天练习过</label>
-            <label class="check-option"><input type="checkbox" value="week" onchange="changeTimeFilter()"> 近一周练习过</label>
-            <label class="check-option"><input type="checkbox" value="month" onchange="changeTimeFilter()"> 近一月练习过</label>
-            <label class="check-option"><input type="checkbox" value="old" onchange="changeTimeFilter()"> 超一月未练习</label>
           </div></div>
         </div>
         <div class="toolbar-actions">
@@ -208,7 +262,7 @@ h1{margin:0;font-size:30px}.sub{color:var(--muted);margin-top:8px;font-size:14px
           <button class="btn primary" onclick="startReview()">开始复习</button>
         </div>
       </div>
-      <div class="review-stage" id="reviewStage"><div class="review-table-wrap"><table class="review-table"><thead><tr><th>单词</th><th>释义</th><th>最近练习时间</th><th>词书</th><th></th></tr></thead><tbody id="reviewTableBody"></tbody></table></div><aside class="review-detail" id="reviewDetail"></aside></div>
+      <div class="review-stage" id="reviewStage"><div class="review-table-wrap"><table class="review-table"><thead><tr><th>单词</th><th>释义</th><th>词书</th><th></th></tr></thead><tbody id="reviewTableBody"></tbody></table></div><aside class="review-detail" id="reviewDetail"></aside></div>
     </section>
 
     <section id="statsView" class="hidden">
@@ -308,15 +362,14 @@ function changeBookFilter(el){
  if(!all.checked&&!others.some(x=>x.checked))all.checked=true;
  const vals=selectedValues('bookFilter');document.getElementById('bookFilterLabel').textContent=vals.includes('all')?'全部':vals.length===1?vals[0]:`已选${vals.length}项`;renderReviewTable();
 }
-function changeTimeFilter(){const vals=selectedValues('timeFilter');document.getElementById('timeFilterLabel').textContent=vals.length?`已选${vals.length}项`:'最近练习';renderReviewTable()}
 function filteredReviewWords(){
- const books=selectedValues('bookFilter'),times=selectedValues('timeFilter');
- return reviewWords.filter(x=>(books.includes('all')||books.includes(x.book))&&(!times.length||times.includes(x.age)));
+ const books=selectedValues('bookFilter');
+ return reviewWords.filter(x=>books.includes('all')||books.includes(x.book));
 }
 function renderReviewTable(){
  const body=document.getElementById('reviewTableBody');if(!body)return;
  const rows=filteredReviewWords();
- body.innerHTML=rows.length?rows.map(x=>`<tr><td class="word-cell">${x.word}</td><td>${x.pos} ${x.meaning}</td><td>${x.date}</td><td><span class="book-pill">${x.book}</span></td><td><button class="detail-btn" onclick="openWordDetail('${x.word}')">查看详情</button></td></tr>`).join(''):`<tr><td colspan="5"><div class="empty-review">当前筛选条件下暂无错词</div></td></tr>`;
+ body.innerHTML=rows.length?rows.map(x=>`<tr><td class="word-cell">${x.word}</td><td>${x.pos} ${x.meaning}</td><td><span class="book-pill">${x.book}</span></td><td><button class="detail-btn" onclick="openWordDetail('${x.word}')">详情</button></td></tr>`).join(''):`<tr><td colspan="4"><div class="empty-review">当前筛选条件下暂无错词</div></td></tr>`;
 }
 function wordDetailSource(x){
  const source=x.book==='考点词'?keySynData.find(d=>d.word===x.word):x.book==='答案词'?answerData.find(d=>d.word===x.word):topicData.find(d=>d.word===x.word);
@@ -363,7 +416,19 @@ function setupTrendTooltip(){
  document.querySelectorAll('.trend-dot').forEach(dot=>{dot.onmouseenter=e=>{tip.textContent=`${dot.dataset.day}：复习 ${dot.dataset.value} 个单词`;tip.style.display='block';const card=dot.closest('.chart-card').getBoundingClientRect();tip.style.left=(e.clientX-card.left+12)+'px';tip.style.top=(e.clientY-card.top-38)+'px'};dot.onmousemove=dot.onmouseenter;dot.onmouseleave=()=>tip.style.display='none'});
 }
 
-function showView(id){['listView','groupView','modeView','exerciseView','doneView','reviewView','statsView'].forEach(v=>document.getElementById(v).classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
+function showView(id){
+ ['listView','groupView','modeView','exerciseView','doneView','reviewView','statsView'].forEach(v=>document.getElementById(v).classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+ const content=document.querySelector('.content');
+ content.classList.toggle('exercise-scroll',id==='exerciseView');
+ content.scrollTop=0;
+}
+function scrollToAnalysis(){
+ requestAnimationFrame(()=>{
+   const analysis=document.querySelector('#exerciseView .analysis');
+   if(analysis)analysis.scrollIntoView({behavior:'smooth',block:'start'});
+ });
+}
 function openNav(name){
  document.querySelectorAll('[data-nav]').forEach(n=>n.classList.toggle('active',n.dataset.nav===name));
  showView(name==='book'?'listView':name==='review'?'reviewView':'statsView');
@@ -500,6 +565,7 @@ function renderKeySyn(){
  document.getElementById('analysisBtn').onclick=()=>{
    state.analysis=!state.analysis;
    renderKeySyn();
+   if(state.analysis)scrollToAnalysis();
  };
  document.getElementById('replay').onclick=()=>{resetItem();renderKeySyn();setTimeout(()=>d.opts.forEach((o,i)=>setTimeout(()=>speak(o.en),i*1000)),100)};
 }
@@ -567,6 +633,7 @@ function renderAnswerFlash(){
  document.getElementById('answerFlashAnalysis').onclick=()=>{
    state.analysis=!state.analysis;
    renderAnswerFlash();
+   if(state.analysis)scrollToAnalysis();
  };
 
  document.getElementById('answerFlashReplay').onclick=()=>{
@@ -738,6 +805,7 @@ function renderTopicFlash(){
  document.getElementById('topicFlashAnalysis').onclick=()=>{
    state.analysis=!state.analysis;
    renderTopicFlash();
+   if(state.analysis)scrollToAnalysis();
  };
 
  document.getElementById('topicFlashReplay').onclick=()=>{
@@ -821,6 +889,7 @@ function renderTopicMeaning(){
  document.getElementById('topicAnalysis').onclick=()=>{
    state.analysis=!state.analysis;
    renderTopicMeaning();
+   if(state.analysis)scrollToAnalysis();
  };
 }
 
