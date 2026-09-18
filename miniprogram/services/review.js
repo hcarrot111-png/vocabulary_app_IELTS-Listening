@@ -1,4 +1,4 @@
-const KEY = 'listening_vocab_review_words'
+const KEY = 'listening_vocab_review_words_c11_21_v1'
 const QUEUE_KEY = 'listening_vocab_review_queue'
 
 function getReviewWords(){ return wx.getStorageSync(KEY) || [] }

@@ -3,9 +3,11 @@
   <view class="row between"><view class="sub">{{mode==='flash'?'刷词速记':practiceName}}</view><view class="sub">{{index+1}} / {{queue.length}}</view></view>
   <view class="practice-card">
     <view wx:if="{{mode==='flash'}}" class="center">
-      <view class="word-line"><text class="word">{{item.word}}</text><view class="audio" bindtap="playMain">🔊</view></view><view class="phon">{{item.phon}}</view><view class="meaning">{{item.pos}} {{item.meaning}}</view>
+      <view class="word-line"><text class="word">{{item.word}}</text><view class="audio" bindtap="playMain">🔊</view></view><view class="phon">{{item.phon}}</view>
+      <view class="vocab-meta" wx:if="{{item.type!=='key'}}"><view class="vocab-chip" wx:if="{{item.type==='topic'&&item.topic}}">话题 <text>{{item.topic}}</text></view><view class="vocab-chip" wx:if="{{item.difficulty}}">词汇难度 <text>{{item.difficulty}}</text></view></view>
+      <view class="meaning">{{item.pos}} {{item.meaning}}</view>
       <view class="section" wx:if="{{item.type==='key'}}"><view class="section-title">同义替换</view><view class="syn-row" wx:for="{{item.synonyms}}" wx:key="en"><text class="syn-en">{{item.en}}</text><text>{{item.zh}}</text><view class="audio small" data-word="{{item.en}}" bindtap="playAny">🔊</view></view></view>
-      <view class="section" wx:else><view class="section-title">例句</view><view class="box">{{item.example}}</view><view class="box zh">{{item.translation}}</view></view>
+      <view class="section" wx:else><view class="section-title">例句</view><view class="box">{{item.example}}</view><view class="box zh"><text wx:for="{{translationParts}}" wx:key="index" class="{{item.hl?'hl':''}}">{{item.text}}</text></view></view>
     </view>
 
     <view wx:elif="{{item.type==='key'}}" class="center"><view class="word-line"><text class="word">{{item.word}}</text><view class="audio" bindtap="playMain">🔊</view></view><view class="phon">{{item.phon}}</view><view class="sub tip">请选择所有含义相同或相近的词语</view><view class="option-grid"><view wx:for="{{options}}" wx:key="en" class="option {{item.selected?'selected':''}} {{submitted&&item.correct?'correct':''}} {{submitted&&item.selected&&!item.correct?'wrong':''}}" data-index="{{index}}" bindtap="toggleOption"><view class="audio" data-word="{{item.en}}" catchtap="playAny">🔊</view><view>{{item.en}}</view><view class="sub">{{item.zh}}</view></view></view><view class="feedback {{correct?'ok':'bad'}}" wx:if="{{submitted}}">{{correct?'回答正确':'答案有遗漏或误选，已加入复习'}}</view></view>
@@ -13,6 +15,7 @@
     <view wx:elif="{{item.type==='answer'}}" class="center answer-spell">
       <view class="answer-setting"><text>显示释义</text><switch checked="{{showAnswerMeaning}}" bindchange="toggleAnswerMeaning" color="#006eeb"/></view>
       <view class="big-audio answer-audio" bindtap="playMain">🔊</view>
+      <view class="vocab-meta" wx:if="{{item.difficulty}}"><view class="vocab-chip">词汇难度 <text>{{item.difficulty}}</text></view></view>
       <view class="phon">词性：{{item.pos}}<text wx:if="{{submitted&&!showAnswerMeaning}}" class="inline-meaning">{{item.meaning}}</text></view>
       <view class="meaning answer-meaning" wx:if="{{showAnswerMeaning&&!submitted}}">{{item.meaning}}</view>
       <view class="spell-cells">
@@ -27,12 +30,20 @@
         <view class="correct-answer">正确答案：{{item.word}}</view>
         <view class="answer-info">
           <view class="info-label">例句</view><view class="box">{{item.example}}</view>
-          <view class="info-line"><view class="info-label">例句中文翻译</view><view>{{item.translation}}</view></view>
+          <view class="info-line"><view class="info-label">例句中文翻译</view><view><text wx:for="{{translationParts}}" wx:key="index" class="{{item.hl?'hl':''}}">{{item.text}}</text></view></view>
         </view>
       </view>
     </view>
 
-    <view wx:else class="center"><view class="big-audio" bindtap="playMain">🔊</view><view class="sub tip">听发音，选择正确的中文含义</view><view class="choice {{selectedChoice===index?'selected':''}} {{submitted&&item===currentItem.meaning?'correct':''}}" wx:for="{{item.choices}}" wx:key="*this" data-index="{{index}}" bindtap="selectChoice">{{index+1}}. {{item}}</view><view class="meaning" wx:if="{{submitted}}">{{currentItem.word}} · {{currentItem.meaning}}</view><view class="feedback {{correct?'ok':'bad'}}" wx:if="{{submitted}}">{{correct?'回答正确':'回答错误，已加入复习'}}</view></view>
+    <view wx:else class="center topic-practice">
+      <view class="big-audio topic-audio" bindtap="playMain">🔊</view>
+      <view class="vocab-meta"><view class="vocab-chip" wx:if="{{item.topic}}">话题 <text>{{item.topic}}</text></view><view class="vocab-chip" wx:if="{{item.difficulty}}">单词难度 <text>{{item.difficulty}}</text></view></view>
+      <view class="sub tip">听发音，选择正确的中文含义</view>
+      <view class="topic-answer" wx:if="{{submitted}}"><view class="word-line compact-line"><text class="word topic-word">{{item.word}}</text><view class="audio small" bindtap="playMain">🔊</view></view><view class="phon">{{item.phon}}</view><view class="meaning">{{item.meaning}}</view></view>
+      <view class="choice {{selectedChoice===index?'selected':''}} {{submitted&&item===currentItem.meaning?'correct':''}} {{submitted&&selectedChoice===index&&item!==currentItem.meaning?'wrong':''}}" wx:for="{{item.choices}}" wx:key="*this" data-index="{{index}}" bindtap="selectChoice">{{index+1}}. {{item}}</view>
+      <view class="feedback {{correct?'ok':'bad'}}" wx:if="{{submitted}}">{{correct?'回答正确':'回答错误，正确答案已标出，并已自动加入复习。'}}</view>
+      <view class="topic-analysis" wx:if="{{topicStage==='analysis'}}"><view class="section-title">▤ 解析</view><view class="info-label">例句</view><view class="box topic-box">{{item.example}}</view><view class="info-line"><view class="info-label">例句中文译文</view><view class="box topic-box"><text wx:for="{{translationParts}}" wx:key="index" class="{{item.hl?'hl':''}}">{{item.text}}</text></view></view></view>
+    </view>
   </view>
-  <view class="bottom-actions"><button class="btn ghost" bindtap="prev" disabled="{{index===0}}">上一词</button><button wx:if="{{mode!=='flash'&&!submitted&&item.type!=='answer'}}" class="btn primary" bindtap="submit">确认答案</button><button wx:elif="{{mode==='flash'||submitted}}" class="btn primary" bindtap="next">{{index===queue.length-1?'完成':'下一词'}}</button><button wx:else class="btn ghost" disabled>完成拼写后继续</button></view>
+  <view class="bottom-actions {{item.type==='topic'?'topic-actions':''}}"><button class="btn ghost" bindtap="prev" disabled="{{index===0}}">上一词</button><block wx:if="{{item.type==='topic'}}"><button class="btn ghost" bindtap="replayTopic">再听一遍</button><button class="btn ghost" wx:if="{{topicStage!=='analysis'}}" bindtap="showTopicAnalysis">查看解析</button><button class="btn primary" wx:if="{{!submitted}}" bindtap="submit">确认答案</button><button class="btn primary" wx:else bindtap="next">{{index===queue.length-1?'完成':'下一词'}}</button></block><block wx:else><button wx:if="{{mode!=='flash'&&!submitted&&item.type!=='answer'}}" class="btn primary" bindtap="submit">确认答案</button><button wx:elif="{{mode==='flash'||submitted}}" class="btn primary" bindtap="next">{{index===queue.length-1?'完成':'下一词'}}</button><button wx:else class="btn ghost" disabled>完成拼写后继续</button></block></view>
 </view>
