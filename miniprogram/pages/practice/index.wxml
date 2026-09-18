@@ -10,9 +10,29 @@
 
     <view wx:elif="{{item.type==='key'}}" class="center"><view class="word-line"><text class="word">{{item.word}}</text><view class="audio" bindtap="playMain">🔊</view></view><view class="phon">{{item.phon}}</view><view class="sub tip">请选择所有含义相同或相近的词语</view><view class="option-grid"><view wx:for="{{options}}" wx:key="en" class="option {{item.selected?'selected':''}} {{submitted&&item.correct?'correct':''}} {{submitted&&item.selected&&!item.correct?'wrong':''}}" data-index="{{index}}" bindtap="toggleOption"><view class="audio" data-word="{{item.en}}" catchtap="playAny">🔊</view><view>{{item.en}}</view><view class="sub">{{item.zh}}</view></view></view><view class="feedback {{correct?'ok':'bad'}}" wx:if="{{submitted}}">{{correct?'回答正确':'答案有遗漏或误选，已加入复习'}}</view></view>
 
-    <view wx:elif="{{item.type==='answer'}}" class="center"><view class="big-audio" bindtap="playMain">🔊</view><view class="phon">词性：{{item.pos}}</view><input class="spell-input" value="{{answerInput}}" bindinput="onAnswerInput" placeholder="请输入听到的单词" disabled="{{submitted}}"/><view class="meaning" wx:if="{{submitted}}">正确答案：{{item.word}} · {{item.meaning}}</view><view class="feedback {{correct?'ok':'bad'}}" wx:if="{{submitted}}">{{correct?'拼写正确':'拼写错误，已加入复习'}}</view></view>
+    <view wx:elif="{{item.type==='answer'}}" class="center answer-spell">
+      <view class="answer-setting"><text>显示释义</text><switch checked="{{showAnswerMeaning}}" bindchange="toggleAnswerMeaning" color="#006eeb"/></view>
+      <view class="big-audio answer-audio" bindtap="playMain">🔊</view>
+      <view class="phon">词性：{{item.pos}}<text wx:if="{{submitted&&!showAnswerMeaning}}" class="inline-meaning">{{item.meaning}}</text></view>
+      <view class="meaning answer-meaning" wx:if="{{showAnswerMeaning&&!submitted}}">{{item.meaning}}</view>
+      <view class="spell-cells">
+        <input wx:for="{{spellCells}}" wx:key="id" class="spell-cell {{item.status}}" data-index="{{index}}" value="{{item.value}}" maxlength="1" disabled="{{submitted}}" focus="{{spellFocusIndex===index}}" bindinput="onSpellCellInput"/>
+      </view>
+      <view class="spell-action-row" wx:if="{{!submitted}}">
+        <button class="btn primary compact" bindtap="confirmSpelling">{{spellStage==='retry'?'再次确认':'确认拼写'}}</button>
+        <button class="btn ghost compact" wx:if="{{spellStage==='retry'}}" bindtap="viewSpellingAnswer">查看答案</button>
+      </view>
+      <view class="feedback {{correct?'ok':'bad'}}" wx:if="{{spellStage!=='input'}}">{{spellFeedback}}</view>
+      <view wx:if="{{submitted}}">
+        <view class="correct-answer">正确答案：{{item.word}}</view>
+        <view class="answer-info">
+          <view class="info-label">例句</view><view class="box">{{item.example}}</view>
+          <view class="info-line"><view class="info-label">例句中文翻译</view><view>{{item.translation}}</view></view>
+        </view>
+      </view>
+    </view>
 
     <view wx:else class="center"><view class="big-audio" bindtap="playMain">🔊</view><view class="sub tip">听发音，选择正确的中文含义</view><view class="choice {{selectedChoice===index?'selected':''}} {{submitted&&item===currentItem.meaning?'correct':''}}" wx:for="{{item.choices}}" wx:key="*this" data-index="{{index}}" bindtap="selectChoice">{{index+1}}. {{item}}</view><view class="meaning" wx:if="{{submitted}}">{{currentItem.word}} · {{currentItem.meaning}}</view><view class="feedback {{correct?'ok':'bad'}}" wx:if="{{submitted}}">{{correct?'回答正确':'回答错误，已加入复习'}}</view></view>
   </view>
-  <view class="bottom-actions"><button class="btn ghost" bindtap="prev" disabled="{{index===0}}">上一词</button><button wx:if="{{mode!=='flash'&&!submitted}}" class="btn primary" bindtap="submit">确认答案</button><button wx:else class="btn primary" bindtap="next">{{index===queue.length-1?'完成':'下一词'}}</button></view>
+  <view class="bottom-actions"><button class="btn ghost" bindtap="prev" disabled="{{index===0}}">上一词</button><button wx:if="{{mode!=='flash'&&!submitted&&item.type!=='answer'}}" class="btn primary" bindtap="submit">确认答案</button><button wx:elif="{{mode==='flash'||submitted}}" class="btn primary" bindtap="next">{{index===queue.length-1?'完成':'下一词'}}</button><button wx:else class="btn ghost" disabled>完成拼写后继续</button></view>
 </view>
